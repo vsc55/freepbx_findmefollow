@@ -15,7 +15,7 @@ class Backup Extends Base\BackupBase{
 		$this->addConfigs([
 			'tables' => $this->dumpTables(),
 			'features' => $this->dumpFeatureCodes(),
-			'fmstatus' => $followmeStatus
+			'fmstatus' => ($followmeStatus ?? [])
 		]);
 	}
 }
