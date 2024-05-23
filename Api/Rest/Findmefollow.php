@@ -20,7 +20,8 @@ class Findmefollow extends Base {
 			}
 
 			$users = $users ?: false;
-			return $response->withJson($users);
+			$response->getBody()->write(json_encode($users));
+			return $response->withHeader('Content-Type', 'application/json');
 		})->add($this->checkAllReadScopeMiddleware());
 
 		/**
@@ -32,7 +33,8 @@ class Findmefollow extends Base {
 			\FreePBX::Modules()->loadFunctionsInc('findmefollow');
 			$users = findmefollow_get($args['id'], 1);
 			$users = $users ?: false;
-			return $response->withJson($users);
+			$response->getBody()->write(json_encode($users));
+			return $response->withHeader('Content-Type', 'application/json');
 		})->add($this->checkAllReadScopeMiddleware());
 
 		/**
@@ -44,7 +46,7 @@ class Findmefollow extends Base {
 			$params = $request->getParsedBody();
 
 			findmefollow_del($args['id']);
-			return $response->withJson(findmefollow_add(
+			$response->getBody()->write(json_encode(findmefollow_add(
 				$args['id'],
 				$params['strategy'],
 				$params['grptime'],
@@ -61,8 +63,8 @@ class Findmefollow extends Base {
 				$params['ddial'],
 				$params['changecid'],
 				$params['fixedcid'])
-			);
-
+			));
+			return $response->withHeader('Content-Type', 'application/json');
 		})->add($this->checkAllWriteScopeMiddleware());
 	}
 }
