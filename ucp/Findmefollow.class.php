@@ -85,13 +85,53 @@ class Findmefollow extends Modules{
 		return $widgetList;
 	}
 
+	/**
+	 * validate against rules
+	 */
+	private function validate($extension = false) {
+		$data = array(
+			'hasError' => false,
+			'errorMessages' => []
+		);
+
+		$enable = $this->UCP->getCombinedSettingByID($this->userId, 'Findmefollow', 'enable');
+		if ($enable == 'no') {
+			$data['hasError'] = true;
+			$data['errorMessages'][] = _('Find Me/Follow Me is not enabled for this user.');
+		}
+		$extensions = $this->UCP->getCombinedSettingByID($this->userId, 'Findmefollow', 'assigned');
+		if (empty($extensions)) {
+			$data['hasError'] = true;
+			$data['errorMessages'][] = _('There are no assigned extensions.');
+		}
+		if ($extension !== false) {
+			if (empty($extension)) {
+				$data['hasError'] = true;
+				$data['errorMessages'][] = _('The given extension is empty.');
+			}
+			if (!$this->_checkExtension($extension)) {
+				$data['hasError'] = true;
+				$data['errorMessages'][] = _('This extension is not assigned to this user.');
+			}
+		}
+
+		return $data;
+	}
+
 	public function getSimpleWidgetList() {
+		$responseData = array(
+			"rawname" => "findmefollow",
+			"display" => _("Follow Me"),
+			"icon" => "fa fa-binoculars",
+			"list" => []
+		);
+		$errors = $this->validate();
+		if ($errors['hasError']) {
+			return array_merge($responseData, $errors);
+		}
+
 		$widgets = [];
 
-		$enable = $this->UCP->getCombinedSettingByID($this->userId,'Findmefollow','enable');
-		if($enable == 'no')
-		{ return [];
-		}
 		$extensions = $this->UCP->getCombinedSettingByID($this->userId,'Findmefollow','assigned');
 
 		if (!empty($extensions)) {
@@ -107,18 +147,18 @@ class Findmefollow extends Modules{
 				$widgets[$extension] = ["display" => $name, "description" => sprintf(_("Find Me/Follow Me for %s"),$name), "hasSettings" => true, "defaultsize" => ["height" => 2, "width" => 1], "minsize" => ["height" => 2, "width" => 1]];
 			}
 		}
-
-		if (empty($widgets)) {
-			return [];
-		}
+		$responseData['list'] = $widgets;
+		return $responseData;
 
 		return ["rawname" => "findmefollow", "display" => _("Follow Me"), "icon" => "fa fa-binoculars", "list" => $widgets];
 	}
 
 	public function getWidgetDisplay($id) {
-		if (!$this->_checkExtension($id)) {
-			return [];
+		$errors = $this->validate($id);
+		if ($errors['hasError']) {
+			return $errors;
 		}
+
 		$settings = $this->UCP->FreePBX->Findmefollow->getSettingsById($id, 1);
 		$displayvars = ["extension" => $id, "enabled" => $settings['ddial'] ? false : true];
 
