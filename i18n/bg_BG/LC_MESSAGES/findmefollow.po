@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreePBX v2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 06:51-0500\n"
+"POT-Creation-Date: 2024-05-28 09:50-0400\n"
 "PO-Revision-Date: 2015-03-11 21:58+0200\n"
 "Last-Translator: Chavdar <chavdar_75@yahoo.com>\n"
 "Language-Team: Bulgarian <http://weblate.freepbx.org/projects/freepbx/"
@@ -256,9 +256,13 @@ msgstr ""
 msgid "Find Me/Follow Me Has Been Updated!"
 msgstr ""
 
-#: ucp/Findmefollow.class.php:107
+#: ucp/Findmefollow.class.php:147
 #, php-format
 msgid "Find Me/Follow Me for %s"
+msgstr ""
+
+#: ucp/Findmefollow.class.php:100
+msgid "Find Me/Follow Me is not enabled for this user."
 msgstr ""
 
 #: install.php:5
@@ -305,8 +309,8 @@ msgid ""
 msgstr ""
 
 #: findmefollow.i18n.php:4 findmefollow.i18n.php:10 page.findmefollow.php:11
-#: ucp/Findmefollow.class.php:115 ucp/Findmefollow.class.php:125
-#: ucp/Findmefollow.class.php:151
+#: ucp/Findmefollow.class.php:124 ucp/Findmefollow.class.php:153
+#: ucp/Findmefollow.class.php:165 ucp/Findmefollow.class.php:191
 msgid "Follow Me"
 msgstr "Следвай Ме"
 
@@ -713,6 +717,10 @@ msgstr ""
 msgid "The extension number"
 msgstr ""
 
+#: ucp/Findmefollow.class.php:110
+msgid "The given extension is empty."
+msgstr ""
+
 #: views/form.php:255
 msgid "The number users will dial to ring extensions in this Followme group"
 msgstr ""
@@ -721,6 +729,10 @@ msgstr ""
 msgid ""
 "The numbers that will be dialed. Numbers are `-` separated. External numbers "
 "should have a `#` suffix."
+msgstr ""
+
+#: ucp/Findmefollow.class.php:105
+msgid "There are no assigned extensions."
 msgstr ""
 
 #: views/ucp_config.php:55
@@ -738,6 +750,10 @@ msgstr ""
 
 #: Api/Gql/Findmefollow.php:522
 msgid "This extension does not exist"
+msgstr ""
+
+#: ucp/Findmefollow.class.php:114
+msgid "This extension is not assigned to this user."
 msgstr ""
 
 #: views/form.php:466
