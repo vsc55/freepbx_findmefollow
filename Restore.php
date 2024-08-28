@@ -22,6 +22,8 @@ class Restore Extends Base\RestoreBase{
 			$astman->database_put("AMPUSER",$row['grpnum']."/followme/toolatemsg",$row['toolate_id']);
 			$astman->database_put("AMPUSER",$row['grpnum']."/followme/postdest",$row['postdest']);
 			$astman->database_put("AMPUSER",$row['grpnum']."/followme/ringing",$row['ringing']);
+			$value = (isset($row['needsconf']) && $row['needsconf']=='CHECKED')? 'ENABLED' : 'DISABLED';
+			$astman->database_put("AMPUSER",$row['grpnum']."/followme/grpconf",$value);
 		}
 		$fmstatus = $configs['fmstatus'];
 		if(!empty($fmstatus)) {
